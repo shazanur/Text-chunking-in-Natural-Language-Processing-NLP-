@@ -2,6 +2,21 @@ import streamlit as st
 from PyPDF2 import PdfReader
 import nltk
 
+import nltk
+import os
+from pathlib import Path
+
+NLTK_DIR = Path(os.getcwd()) / "nltk_data"
+NLTK_DIR.mkdir(exist_ok=True)
+
+nltk.data.path.append(str(NLTK_DIR))
+
+for pkg in ["punkt", "punkt_tab"]:
+    try:
+        nltk.data.find(f"tokenizers/{pkg}")
+    except LookupError:
+        nltk.download(pkg, download_dir=str(NLTK_DIR))
+
 st.set_page_config(page_title="Text Chunker (NLTK Sentence Tokenizer)", layout="wide")
 
 st.title("Text Chunker (NLTK Sentence Tokenizer)")
